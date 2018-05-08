@@ -6,6 +6,11 @@ public class TaskCollectResources : MonoBehaviour, ITask {
     float coolDownTimer = 0, coolDown;
 
     private string state = "Collecting";
+
+    public TaskCollectResources(Collectable collectable){
+        this.target = collectable;
+    }
+
     public bool Execute() {
         if(target == null)
             return false;

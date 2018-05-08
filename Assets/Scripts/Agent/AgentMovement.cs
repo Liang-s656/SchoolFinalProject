@@ -8,9 +8,11 @@ public class AgentMovement : MonoBehaviour {
     public static float speed;
     private List<Vector3> movementBatch;
     private Animator animator;
+    private AgentController agentController;
 
     private void Start() {
         animator = GetComponent<Animator>();
+        agentController = GetComponent<AgentController>();
     }
 
     void FixedUpdate() {
@@ -45,6 +47,8 @@ public class AgentMovement : MonoBehaviour {
         } else {
             animator.SetBool("wallking", false);
             animator.SetBool("climbing", false);
+
+            agentController.walking = false;
             // Start task/action
         }
     }

@@ -51,6 +51,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+     <Compile Include="Assets\Scripts\Agent\AgentController.cs" />
      <Compile Include="Assets\Scripts\Agent\AgentMovement.cs" />
      <Compile Include="Assets\Scripts\Agent\ITask.cs" />
      <Compile Include="Assets\Scripts\Agent\Tasks\TaskCollectResources.cs" />

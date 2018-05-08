@@ -1,3 +1,4 @@
+
 interface ITask
 {
     bool Execute();
