@@ -1,0 +1,44 @@
+{
+  "name": "Stairs",
+  "description": "",
+  "type": "stuff",
+  "prefabPath" : "stairs/stairs",
+
+  "isRotatable": true,
+  "requiresBlueprint": false,
+
+  "upgrades": null
+},
+{
+  "name": "Energo Stabilizer",
+  "description": "",
+  "type": "Energo",
+  "prefabPath" : "energo/stabilizer/stabilizer",
+
+  "isRotatable": false,
+  "requiresBlueprint": false,
+
+  "upgrades": null
+},
+{
+  "name": "Agent Charger",
+  "description": "",
+  "type": "agent",
+  "prefabPath" : "agent/charger",
+
+  "isRotatable": false,
+  "requiresBlueprint": false,
+
+  "upgrades": null
+},
+{
+  "name": "Energo Collector",
+  "description": "",
+  "type": "energo",
+  "prefabPath" : "energo/collector/collector",
+
+  "isRotatable": false,
+  "requiresBlueprint": false,
+
+  "upgrades": null
+},
