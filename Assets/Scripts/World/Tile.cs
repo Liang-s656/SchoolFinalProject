@@ -11,11 +11,18 @@ public class Tile: Node {
         this.location = structure.location = location;
     }
     private bool IsClimbable() {
-        return false;
+        return building.name == "Stairs";
     }
 
     private bool IsMovable() {
         return true;
+    }
+
+    private string GetBuilding() {
+        if(building == null) {
+            return "";
+        }
+        return building.name;
     }
 
     public override List<Node> GetNeighbors() {
