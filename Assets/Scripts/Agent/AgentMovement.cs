@@ -57,8 +57,7 @@ public class AgentMovement : MonoBehaviour {
 
     public void AddPath(List<Vector3> path, bool clear = true){
         if(clear) ClearPath();
-        for (int i = 0; i < path.Count; i++)
-        {
+        for (int i = 0; i < path.Count; i++) {
             AddPointToPath(path[i]);
         }
     }

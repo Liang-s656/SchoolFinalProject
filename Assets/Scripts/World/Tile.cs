@@ -11,11 +11,17 @@ public class Tile: Node {
         this.location = structure.location = location;
     }
     private bool IsClimbable() {
-        return building.name == "Stairs";
+        return GetBuilding() == "Stairs";
     }
 
     private bool IsMovable() {
-        return true;
+        return GetBuilding() == "";
+    }
+
+    public void PlaceBuilding(GameObject building) {
+        building.transform.parent = transform;
+        building.transform.position = transform.position;
+        this.building = building;
     }
 
     private string GetBuilding() {

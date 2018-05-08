@@ -36,6 +36,13 @@ public class Island: Grid
             }
         }
     }
+
+    public Tile GetTileByWorldCoords(float x, float z){
+        x -= transform.position.z;
+        z -= transform.position.z;
+        return (Tile)grid[(int)x, (int)z];
+    }
+
     private bool PlaceTree(Vector3 point) {
         float p = Mathf.PerlinNoise(point.x / treeSeed.x, point.z / treeSeed.z) * treeSeed.y;
         return p > treeSeedFactor && point.y > treeStartHeight;
