@@ -33,7 +33,7 @@ public class TaskCollectResources : MonoBehaviour, ITask {
             // Dead target
             state = "DONE";
         } else {
-            // TODO: Add to my resources
+            PlayerData.AddResource(collected);
         }
     }
 
