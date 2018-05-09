@@ -61,6 +61,7 @@
      <Compile Include="Assets\Scripts\Builds\Resource.cs" />
      <Compile Include="Assets\Scripts\Player\CameraMovement.cs" />
      <Compile Include="Assets\Scripts\Player\PlayerController.cs" />
+     <Compile Include="Assets\Scripts\Player\PlayerData.cs" />
      <Compile Include="Assets\Scripts\World\Grid.cs" />
      <Compile Include="Assets\Scripts\World\Island.cs" />
      <Compile Include="Assets\Scripts\World\Node.cs" />

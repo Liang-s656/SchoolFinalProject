@@ -31,6 +31,8 @@ public class AgentController : MonoBehaviour {
             taskBatch.Add(new TaskCollectResources(target.GetComponent<Collectable>()));
         } else if(target.name == "Charge Station") {
 
+        } else if(target.GetComponent<Repairable>()){
+            taskBatch.Add(new TaskRepair());            
         }
     }
 
