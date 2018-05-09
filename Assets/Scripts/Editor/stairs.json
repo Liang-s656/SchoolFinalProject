@@ -1,0 +1,15 @@
+{
+  "name": "Stair",
+  "description": "...",
+  "type": "navigation",
+  "prefabPath": "stairs/stairs",
+  "isRotatable": true,
+  "requiresBlueprint": false,
+  "requiredResources": [
+    {
+      "resourceID": 0,
+      "amount": 3
+    }
+  ],
+  "upgrades": []
+}

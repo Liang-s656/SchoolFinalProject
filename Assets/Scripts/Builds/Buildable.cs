@@ -8,5 +8,7 @@ public class Buildable{
     public bool isRotatable;
     public bool requiresBlueprint;
 
+    public Resource[] requiredResources;
+
     public Buildable[] upgrades;
 }

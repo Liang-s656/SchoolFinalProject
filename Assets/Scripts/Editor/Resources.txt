@@ -1,0 +1,8 @@
+0:Wood
+1:Stone
+2:Energy
+3:Sand
+4:Iron
+5:Gold
+6:Ruby
+7:Emerald

@@ -1,44 +1,54 @@
 {
-  "name": "Stairs",
-  "description": "",
-  "type": "stuff",
-  "prefabPath" : "stairs/stairs",
+  "0": {
+    "name": "Stairs",
+    "description": "",
+    "type": "stuff",
+    "prefabPath" : "stairs/stairs",
 
-  "isRotatable": true,
-  "requiresBlueprint": false,
+    "isRotatable": true,
+    "requiresBlueprint": false,
 
-  "upgrades": null
-},
-{
-  "name": "Energo Stabilizer",
-  "description": "",
-  "type": "Energo",
-  "prefabPath" : "energo/stabilizer/stabilizer",
+    "requiredResources": {
+      "0": {
+        "resourceID": "0",
+        "amount": "2"
+      }
+    },
 
-  "isRotatable": false,
-  "requiresBlueprint": false,
+    "upgrades": null
+  },
+  "1": {
+    "name": "Energo Stabilizer",
+    "description": "",
+    "type": "Energo",
+    "prefabPath" : "energo/stabilizer/stabilizer",
 
-  "upgrades": null
-},
-{
-  "name": "Agent Charger",
-  "description": "",
-  "type": "agent",
-  "prefabPath" : "agent/charger",
+    "isRotatable": false,
+    "requiresBlueprint": false,
 
-  "isRotatable": false,
-  "requiresBlueprint": false,
+    "upgrades": null
+  },
+  "2": {
+    "name": "Agent Charger",
+    "description": "",
+    "type": "agent",
+    "prefabPath" : "agent/charger",
 
-  "upgrades": null
-},
-{
-  "name": "Energo Collector",
-  "description": "",
-  "type": "energo",
-  "prefabPath" : "energo/collector/collector",
+    "isRotatable": false,
+    "requiresBlueprint": false,
 
-  "isRotatable": false,
-  "requiresBlueprint": false,
+    "upgrades": null
+  },
+  "3": {
+    "name": "Energo Collector",
+    "description": "",
+    "type": "energo",
+    "prefabPath" : "energo/collector/collector",
 
-  "upgrades": null
-},
+    "isRotatable": false,
+    "requiresBlueprint": false,
+
+    "upgrades": null
+  }
+}
+  
