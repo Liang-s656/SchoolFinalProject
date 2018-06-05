@@ -5,14 +5,17 @@ using UnityEngine;
 using System.Collections.Generic;
 
 public class AgentMovement : MonoBehaviour {
-    public static float speed;
+    public static float speed = 1.5f;
     private List<Vector3> movementBatch;
     private Animator animator;
     private AgentController agentController;
 
+    private Tile myTile;
+
     private void Start() {
         animator = GetComponent<Animator>();
         agentController = GetComponent<AgentController>();
+        UpdateSelf();
     }
 
     void FixedUpdate() {
@@ -28,7 +31,7 @@ public class AgentMovement : MonoBehaviour {
     private void Move() {
         Vector3 from = transform.position;
         Vector3 to = movementBatch[0];
-        Vector3.Lerp(from, to, Time.deltaTime * 10 * speed);
+        transform.position = Vector3.MoveTowards(from, to, Time.deltaTime * speed);
         if( Vector3.Distance(from, to) < 0.01f){
             movementBatch.RemoveAt(0);
             transform.position = to;
@@ -37,13 +40,25 @@ public class AgentMovement : MonoBehaviour {
     }
 
     private void UpdateSelf() {
+
+        if(myTile != null && myTile.GetBuilding() == "agent"){
+            myTile.building = null;
+        }
+
+        myTile = GameController.island.GetTileByWorldCoords(transform.position.x, transform.position.z);
+        myTile.building = gameObject;
+
         if(CanMove()){
             Vector3 from = transform.position;
             Vector3 to = movementBatch[0];    
-            transform.LookAt(to);          
+            if(from.y == to.y){
+                transform.LookAt(to);          
+            }
 
             animator.SetBool("wallking", from.y == to.y);
             animator.SetBool("climbing", from.y != to.y);
+            animator.SetBool("action", false);
+            
         } else {
             animator.SetBool("wallking", false);
             animator.SetBool("climbing", false);
@@ -59,9 +74,10 @@ public class AgentMovement : MonoBehaviour {
         movementBatch.Add(point);
     }
 
-    public void AddPath(List<Vector3> path, bool clear = true){
+    public void AddPath(List<Vector3> path, bool keepLast = true, bool clear = true){
         if(clear) ClearPath();
-        for (int i = 0; i < path.Count; i++) {
+        int to = keepLast ? path.Count : path.Count - 1;
+        for (int i = 0; i < to; i++) {
             AddPointToPath(path[i]);
         }
     }

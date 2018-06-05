@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
-public class Node: MonoBehaviour {
+public class Node {
     public Vector3 location;
 
     //Pathfinding stuff
@@ -11,6 +11,10 @@ public class Node: MonoBehaviour {
     //More about scores : https://www.raywenderlich.com/4946/introduction-to-a-pathfinding
     public int distanceFromStart, distanceToDestination, combinedDistance;
     public Node parent;
+
+    public virtual bool IsMovable(){
+        return true;
+    }
 
     public virtual List<Node> GetNeighbors() {
         return new List<Node>();

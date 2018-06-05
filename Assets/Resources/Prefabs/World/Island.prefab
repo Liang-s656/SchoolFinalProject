@@ -25,7 +25,7 @@ GameObject:
   - component: {fileID: 23302683859223866}
   m_Layer: 0
   m_Name: Island
-  m_TagString: Untagged
+  m_TagString: island
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -52,11 +52,12 @@ MeshRenderer:
   m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_Materials:
-  - {fileID: 0}
+  - {fileID: 2100000, guid: 91b3e9c557d895842b69007b6d2cf8e5, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -67,6 +68,7 @@ MeshRenderer:
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
+  m_StitchLightmapSeams: 0
   m_SelectedEditorRenderState: 3
   m_MinimumChartSize: 4
   m_AutoUVMaxDistance: 0.5
@@ -107,10 +109,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0d6638ba7a892d74a8fb9e976c5ac01a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  islandDiameter: 0
-  seed: {x: 0, y: 0, z: 0}
+  islandDiameter: 24
+  seed: {x: 11, y: 5, z: 11}
   seedFactor: 3
   treeObj: []
-  treeSeed: {x: 0, y: 0, z: 0}
-  treeSeedFactor: 0
-  treeStartHeight: 10
+  treeSeed: {x: 7, y: 5, z: 7}
+  treeSeedFactor: 3
+  treeStartHeight: 8
+  rabbit: {fileID: 1229218148024388, guid: 9e3468de47821e94bb9946959d5ab277, type: 2}

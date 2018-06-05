@@ -20,6 +20,7 @@ public class TileStructure{
         this.triangles = new List <int> ();
         this.uvs = new List <Vector2> ();
         this.normals = new List <Vector3> ();
+        this.neighbors = new TileNeighbors();
     }
 
     public void GenerateTile(){
@@ -99,4 +100,15 @@ public class TileStructure{
         triangles.Add(bottomRight);
         triangles.Add(topRight);
     }
+
+    public List<Tile> GetNeighboursAsList(){
+        List<Tile> allNeigbours = new List<Tile>();
+        allNeigbours.Add(neighbors.top);
+        allNeigbours.Add(neighbors.left);
+        allNeigbours.Add(neighbors.bottom);
+        allNeigbours.Add(neighbors.right);
+        return allNeigbours;        
+    }
+
 }
+

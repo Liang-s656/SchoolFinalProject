@@ -3,14 +3,6 @@ using UnityEditor;
 using System.Collections.Generic;
 using System.IO;
 public class ResourceInterface : EditorWindow {
-    class ResourceData{
-        public int resourceID;
-        public string title;
-        public ResourceData(int id = 0, string title = "EMPTY TITLE"){
-            this.resourceID = id;
-            this.title = title;
-        }
-    }
 
     static List<ResourceData> resources = new List<ResourceData>();
     Vector2 scrollPosition = Vector2.zero;    
@@ -28,13 +20,12 @@ public class ResourceInterface : EditorWindow {
 
     private static void LoadData() {
         resources = new List<ResourceData>();        
-        path = Application.dataPath + "/Scripts/Editor/Resources.txt";
+        path = Application.dataPath + "/Resources/World/Resources.txt";
         sourceFile = new FileInfo(path);
         reader = sourceFile.OpenText();
 
         string text = reader.ReadLine();
         while(text != null){
-            Debug.Log(text);
             string[] tokens = text.Split(':');
             try{
                 resources.Add(new ResourceData(int.Parse(tokens[0]), tokens[1]));
@@ -47,7 +38,7 @@ public class ResourceInterface : EditorWindow {
     }
 
     private void SaveData() {
-        path = Application.dataPath + "/Scripts/Editor/Resources.txt";        
+        path = Application.dataPath + "/Resources/World/Resources.txt";        
         List<string> lines = new List<string>();
         foreach (ResourceData resources in resources)
         {

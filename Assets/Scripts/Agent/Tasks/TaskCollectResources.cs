@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class TaskCollectResources : MonoBehaviour, ITask {
+public class TaskCollectResources : ITask {
     
     Collectable target;
     float coolDownTimer = 0, coolDown;
@@ -9,6 +9,7 @@ public class TaskCollectResources : MonoBehaviour, ITask {
 
     public TaskCollectResources(Collectable collectable){
         this.target = collectable;
+        coolDownTimer = coolDown = collectable.coolDownPeriod;
     }
 
     public bool Execute() {
@@ -30,6 +31,7 @@ public class TaskCollectResources : MonoBehaviour, ITask {
     private void CollectResources() {
         Resource collected = target.CollectRandomResources();
         if( collected == null ){
+            target.Finish();
             // Dead target
             state = "DONE";
         } else {

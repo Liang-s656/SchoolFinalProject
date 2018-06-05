@@ -1,0 +1,16 @@
+seed_x:15.7
+seed_y:5.7
+seed_z:15.7
+
+seed_tree_x:8
+seed_tree_y:5
+seed_tree_z:8
+
+resource_0:99
+resource_1:23
+
+player_position_x:0
+player_position_z:0
+player_rotation_y:45
+
+camera_zoom:15

@@ -1,15 +1,31 @@
 {
-  "name": "Stair",
-  "description": "...",
-  "type": "navigation",
-  "prefabPath": "stairs/stairs",
-  "isRotatable": true,
-  "requiresBlueprint": false,
-  "requiredResources": [
-    {
-      "resourceID": 0,
-      "amount": 3
-    }
-  ],
-  "upgrades": []
+   "buildings":[
+      {
+         "name":"Stair",
+         "description":"...",
+         "type":"navigation",
+         "prefabPath":"/path/to/prefab",
+         "isRotatable":false,
+         "requiresBlueprint":false,
+         "requiredResources":[
+            {
+               "resourceID":0,
+               "amount":3
+            }
+         ],
+         "upgrades":[
+
+         ]
+      },
+      {
+          "name": "Pump_00",
+          "description":"...",
+          "type":"energy",
+          "prefabPath":"/pump_00",
+          "isRotatable":false,
+          "requiresBlueprint":false,
+          "requiredResources":[],
+          "upgrades":[]
+      }
+   ]
 }

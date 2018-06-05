@@ -44,8 +44,9 @@ public class BuildingInterface : EditorWindow {
     private void TestLoad() {
         string path = Application.dataPath + "/Scripts/Editor/stairs.json";
         string json = File.ReadAllText(path);
-        selected = JsonUtility.FromJson<Buildable>(json);
-        Debug.Log(selected.name);
+        buildings = JsonUtility.FromJson<Buildings>(json);
+        selected = buildings.buildings[0];
+        Debug.Log(buildings.buildings.Count);
     }
 
     private void OnGUI() {
@@ -70,9 +71,28 @@ public class BuildingInterface : EditorWindow {
         GUILayout.EndVertical();
 
         // Main panel
-        GUILayout.BeginVertical(GUILayout.Width(w - 200));
+        GUILayout.BeginVertical(GUILayout.Width(300));
             if(selected != null){
+                GUILayout.Label("Name:");
+                selected.name = GUILayout.TextField(selected.name);
+                GUILayout.Label("Description:");                
+                selected.description = GUILayout.TextArea(selected.description, GUILayout.MinHeight(80));
+                GUILayout.Label("Type:");                
+                selected.type = GUILayout.TextField(selected.type);
+                GUILayout.Label("Prefab Path:");                
+                selected.prefabPath = GUILayout.TextField(selected.prefabPath);                
+                GUILayout.BeginHorizontal();
+                    selected.isRotatable = GUILayout.Toggle(selected.isRotatable, "Rotatable");
+                    selected.requiresBlueprint = GUILayout.Toggle(selected.requiresBlueprint, "Blueprint");
+                GUILayout.EndHorizontal();
+                
+                if(selected.requiresBlueprint){
+                    GUILayout.Label("Blueprint Name:");                
+                    GUILayout.TextField("Blueprint name");
+                }   
 
+                GUILayout.Button("Save");       
+                
             }
         GUILayout.EndVertical();
 

@@ -11,14 +11,22 @@ public class Grid : MonoBehaviour
     }
 
     public List<Vector3> GetPath(Node from, Node to) {
+        //if(to.IsMovable() == false || from.IsMovable() == false) return null;
+
         Node current = null;
         List<Node> openList = new List<Node>();
         List<Node> closedList = new List<Node>();        
         int G = 0;
+        int memmoryFix = 0;
 
         openList.Add(from);
 
         while (openList.Count > 0){
+            memmoryFix++;
+            if(memmoryFix > 200){
+                return null;
+            }
+
             //Retrieves the tile with lowest F score
             int lowest = openList.Min(l => l.combinedDistance);
             current = openList.First(l => l.combinedDistance == lowest);
@@ -44,7 +52,9 @@ public class Grid : MonoBehaviour
                         }
                     }
                     path.Add(curr);
-                    current = current.parent;
+                    Node tmp = current.parent;
+                    current.parent = null;
+                    current = tmp;
                 }
                 return path;
             }
@@ -78,7 +88,6 @@ public class Grid : MonoBehaviour
                 }
             }
         }
-
         return null;
     }
 }

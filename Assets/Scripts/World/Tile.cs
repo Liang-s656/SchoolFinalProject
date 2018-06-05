@@ -3,48 +3,78 @@ using UnityEngine;
 
 public class Tile: Node {
     public TileStructure tileStructure;
-    public GameObject building;
+    public GameObject building = null;
     public bool containsTree;
 
     public Tile (Vector3 location, TileStructure structure = null) {
         tileStructure = (structure != null) ? structure : new TileStructure();
-        this.location = structure.location = location;
+        this.location = tileStructure.location = location;
     }
     private bool IsClimbable() {
-        return GetBuilding() == "Stairs";
+        return GetBuilding() == "stairs";
     }
 
-    private bool IsMovable() {
-        return GetBuilding() == "";
+    private Tile StairTowards(GameObject stair = null){
+        if(IsClimbable() || stair != null){
+            if(stair == null) stair = building;
+            int rotation = (int)stair.transform.localEulerAngles.y;
+            if(rotation == 0 || rotation == 360 || rotation == -360){
+                return tileStructure.neighbors.bottom;
+            }else if(rotation == 90 || rotation == -270){
+                return tileStructure.neighbors.right;
+            }else if(rotation == 180 || rotation == -180){
+                return tileStructure.neighbors.top;
+            }else{
+                return tileStructure.neighbors.left;
+            }
+        }
+        return null;
     }
 
-    public void PlaceBuilding(GameObject building) {
-        building.transform.parent = transform;
-        building.transform.position = transform.position;
+    public override bool IsMovable() {
+        //return true;
+        Debug.Log(GetBuilding());
+        return GetBuilding() == "" || IsClimbable() || GetBuilding() == "agent" ;
+    }
+
+    public bool PlaceBuilding(GameObject building) {
+/*        building.transform.parent = transform;
+        building.transform.position = transform.position;*/
+        if(building.tag == "stairs"){
+            Tile tileTowards = StairTowards(building);
+            if(tileTowards.location.y == location.y || tileTowards == null){
+                return false;
+            }
+        }
+
         this.building = building;
+        return true;
     }
 
-    private string GetBuilding() {
+    public string GetBuilding() {
         if(building == null) {
             return "";
         }
-        return building.name;
+        return building.tag;
     }
 
     public override List<Node> GetNeighbors() {
         List<Node> neighbors = new List<Node>();
         foreach (Tile tile in tileStructure.neighbors.ToArray())
         {
-            bool tileIsClimbable = tile.location.y > location.y && tile.IsClimbable();
-            bool iAmClimbable = tile.location.y < location.y && IsClimbable();
+            if(tile == null || location == null){
+                continue;
+            }
+            
+            bool tileIsClimbable = tile.location.y > location.y && tile.IsClimbable() && tile.StairTowards() == this;
+            bool iAmClimbable = tile.location.y < location.y && IsClimbable() && StairTowards() == tile;
             bool isClimbable = tileIsClimbable|| iAmClimbable;
 
             bool isMovable = tile.IsMovable() && tile.location.y == location.y;
 
-            if(!isMovable || !isClimbable)
-                continue;
-
-            neighbors.Add(tile);
+            if(isMovable || (tile.IsMovable() && isClimbable)){
+                neighbors.Add(tile);
+            }
         }
         return neighbors;
     }
@@ -74,8 +104,9 @@ public class Tile: Node {
 
     // Tree optimization
     private bool NeighborHasLinkedTree(Tile neighbor) {
-        return neighbor != null && neighbor.containsTree && neighbor.location.y == location.y ;
+        return neighbor != null && neighbor.containsTree && neighbor.location.y == location.y;
     }
+
     private int getTreeSum() {
         int sum = 0;
         if( NeighborHasLinkedTree(tileStructure.neighbors.top) ) sum += 1;
@@ -85,6 +116,7 @@ public class Tile: Node {
         return sum;
     }
 
+    // TODO: Change to static
     public int getTreeType() {
         int sum = getTreeSum();
         if ( sum == 0 ){

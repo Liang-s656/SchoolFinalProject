@@ -1,0 +1,119 @@
+{
+   "buildings":[
+      {
+         "name":"Stair",
+         "description":"...",
+         "type":"navigation",
+         "prefabPath":"stairs",
+         "isRotatable":true,
+         "requiresBlueprint":false,
+         "requiredResources":[
+            {
+               "resourceID":0,
+               "amount":3
+            }
+         ],
+         "upgrades":[]
+      },
+      {
+          "name": "Pump_00",
+          "description":"...",
+          "type":"energy",
+          "prefabPath":"pump_00",
+          "isRotatable":false,
+          "requiresBlueprint":false,
+          "requiredResources":[],
+          "upgrades":[]
+      },
+      {
+        "name": "Pump_01",
+        "description":"...",
+        "type":"energy",
+        "prefabPath":"pump_01",
+        "isRotatable":false,
+        "requiresBlueprint":false,
+        "requiredResources":[],
+        "upgrades":[]
+    },
+    {
+        "name": "Pump_02",
+        "description":"...",
+        "type":"energy",
+        "prefabPath":"pump_02",
+        "isRotatable":false,
+        "requiresBlueprint":false,
+        "requiredResources":[],
+        "upgrades":[]
+    },
+    {
+        "name": "Pump_03",
+        "description":"...",
+        "type":"energy",
+        "prefabPath":"pump_03",
+        "isRotatable":false,
+        "requiresBlueprint":false,
+        "requiredResources":[],
+        "upgrades":[]
+    },
+    {
+        "name": "Spawner",
+        "description":"...",
+        "type":"energy",
+        "prefabPath":"spawner",
+        "isRotatable":false,
+        "requiresBlueprint":false,
+        "requiredResources":[],
+        "upgrades":[]
+    },
+    {
+        "name": "Rabbit",
+        "description":"...",
+        "type":"energy",
+        "prefabPath":"Rabbit",
+        "isRotatable":false,
+        "requiresBlueprint":false,
+        "requiredResources":[],
+        "upgrades":[]
+    },
+    {
+        "name": "Charger",
+        "description":"...",
+        "type":"energy",
+        "prefabPath":"charger",
+        "isRotatable":false,
+        "requiresBlueprint":false,
+        "requiredResources":[],
+        "upgrades":[]
+    },
+    {
+        "name": "Tree",
+        "description":"...",
+        "type":"energy",
+        "prefabPath":"tree",
+        "isRotatable":false,
+        "requiresBlueprint":false,
+        "requiredResources":[],
+        "upgrades":[]
+    },
+    {
+        "name": "Rocks",
+        "description":"...",
+        "type":"energy",
+        "prefabPath":"rocks",
+        "isRotatable":false,
+        "requiresBlueprint":false,
+        "requiredResources":[],
+        "upgrades":[]
+    },
+    {
+        "name": "Generator",
+        "description":"...",
+        "type":"energy",
+        "prefabPath":"Generator",
+        "isRotatable":false,
+        "requiresBlueprint":false,
+        "requiredResources":[],
+        "upgrades":[]
+    }
+   ]
+}
