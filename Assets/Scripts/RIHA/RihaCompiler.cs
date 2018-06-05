@@ -13,9 +13,16 @@ public class RihaCompiler : MonoBehaviour {
         variableMemmory = new Dictionary<string, RihaNode>();
 
         string[] commands = command.Split(new [] { '\r', '\n' });
+
+        string commandLine = "";
         foreach(string line in commands){
-            List<string> actions = SplitActions(line);
+            commandLine += line;
+            if(!IsEOL(line)){
+                continue;
+            }
+            List<string> actions = SplitActions(commandLine);
             ExecuteAction(actions);
+            commandLine = "";
         }
 	}
 
@@ -36,6 +43,13 @@ public class RihaCompiler : MonoBehaviour {
         string[] arreyActions = text.Split(':');
         List<string> actions = arreyActions.OfType<string>().ToList();
         return actions;
+    }
+
+    //END OF LINE
+    public bool IsEOL(string line){
+        List<string> words = SplitWords(line);
+        line = words.Last();
+        return line[line.Length - 1] != ':';
     }
 
     public void set (string action, string[] words, RihaNode[] previuseActionResult){
