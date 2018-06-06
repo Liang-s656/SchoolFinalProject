@@ -7,10 +7,10 @@ using System;
 using System.Reflection;
 public class RihaCompiler : MonoBehaviour {
 
-    Dictionary<string, RihaNode> variableMemmory;
+    static Dictionary<string, RihaNode> variableMemory;
 
 	public void Execute (string command) {
-        variableMemmory = new Dictionary<string, RihaNode>();
+        variableMemory = new Dictionary<string, RihaNode>();
 
         string[] commands = command.Split(new [] { '\r', '\n' });
 
@@ -39,6 +39,18 @@ public class RihaCompiler : MonoBehaviour {
         return returnList;
     }
 
+    public static void AddToMemory(string key, RihaNode value){
+        RihaCompiler.variableMemory.Add(key, value);
+    }
+/* 
+    loop from a by b till c:
+
+    if a equal to b:
+
+    if a not equal to b:
+    if a less than b:
+    if a bigger than b
+*/
     List<string> SplitActions(string text){
         string[] arreyActions = text.Split(':');
         List<string> actions = arreyActions.OfType<string>().ToList();
@@ -59,7 +71,7 @@ public class RihaCompiler : MonoBehaviour {
             RihaNode varible = previuseActionResult[previuseActionResult.Length - 1];
             ValueType type = GetValueType(words[3]);
             varible.SetType(type);
-            variableMemmory.Add(words[1], varible);
+            variableMemory.Add(words[1], varible);
         }
     }
 
@@ -84,8 +96,8 @@ public class RihaCompiler : MonoBehaviour {
         string addPattern = @"add\s+to\s+\w+\s*";
         if(MatchesRegex(action, addPattern)){
             string variableKey = words[2];
-            if(variableMemmory.ContainsKey(variableKey)){
-                RihaNode varibale = variableMemmory[variableKey];
+            if(variableMemory.ContainsKey(variableKey)){
+                RihaNode varibale = variableMemory[variableKey];
                 varibale.Add(previuseActionResult[previuseActionResult.Length - 1]);
             }
         }
@@ -136,8 +148,8 @@ public class RihaCompiler : MonoBehaviour {
     RihaNode IsFunction(string action, string[] words){
         string[] functions = words[0].Split('.');
         if(functions.Length > 0){
-            if( variableMemmory.ContainsKey(functions[0]) ){
-                return variableMemmory[functions[0]];
+            if( variableMemory.ContainsKey(functions[0]) ){
+                return variableMemory[functions[0]];
             }
         }
         return null;
@@ -161,8 +173,8 @@ public class RihaCompiler : MonoBehaviour {
         }
 
         //Is varibale
-        if(variableMemmory.ContainsKey(words[0])){
-            return variableMemmory[words[0]];
+        if(variableMemory.ContainsKey(words[0])){
+            return variableMemory[words[0]];
         }
 
         //Is array

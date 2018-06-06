@@ -14,7 +14,7 @@ public class SaveGame {
 
     public static List<SaveData> saveFiles;
 
-    public static void PopulateSaveData(string fileLocation = "C:/Users/rihards-pc/Documents/SchoolFinal/Assets/savefile.rih.txt"){
+    public static void PopulateSaveData(string fileLocation = "C:/Users/Rihards/Documents/SchoolFinal/Assets/savefile.rih.txt"){
         saveFiles = new List<SaveData>();
         var lines = File.ReadAllLines(fileLocation);
         foreach (var line in lines){

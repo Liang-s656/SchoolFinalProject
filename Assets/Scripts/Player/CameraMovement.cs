@@ -41,9 +41,12 @@ public class CameraMovement : MonoBehaviour {
     }
     private void Update() {
         // Zoom
-        zoomDir = -Input.GetAxis("Mouse ScrollWheel");
-        if(zoomDir != 0) 
-            Zoom();
+        if(canRotate){
+            zoomDir = -Input.GetAxis("Mouse ScrollWheel");
+            if(zoomDir != 0){
+                Zoom();
+            }
+        }
 
         // Movement
         if (Input.GetMouseButtonDown(1)) {
