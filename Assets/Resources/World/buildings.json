@@ -1,8 +1,8 @@
 {
    "buildings":[
       {
-         "name":"Stair",
-         "description":"...",
+         "name":"stair",
+         "description":"Allows agent to navigate between diffren islands layers",
          "type":"navigation",
          "prefabPath":"stairs",
          "isRotatable":true,
@@ -12,108 +12,148 @@
                "resourceID":0,
                "amount":3
             }
-         ],
-         "upgrades":[]
+         ]
       },
       {
-          "name": "Pump_00",
-          "description":"...",
+          "name": "pump_00",
+          "description":"Generates pure energy by pumbing from ground",
           "type":"energy",
           "prefabPath":"pump_00",
           "isRotatable":false,
           "requiresBlueprint":false,
-          "requiredResources":[],
-          "upgrades":[]
+          "requiredResources":[]
       },
       {
-        "name": "Pump_01",
-        "description":"...",
+        "name": "pump_01",
+        "description":"Burns trees to generate coal",
         "type":"energy",
         "prefabPath":"pump_01",
         "isRotatable":false,
         "requiresBlueprint":false,
-        "requiredResources":[],
-        "upgrades":[]
+        "requiredResources":[
+            {
+               "resourceID":0,
+               "amount":10
+            },
+            {
+               "resourceID":1,
+               "amount":20
+            }
+        ]
     },
     {
-        "name": "Pump_02",
-        "description":"...",
+        "name": "pump_02",
+        "description":"Uses coal to generate energy",
         "type":"energy",
         "prefabPath":"pump_02",
         "isRotatable":false,
         "requiresBlueprint":false,
-        "requiredResources":[],
-        "upgrades":[]
+        "requiredResources":[
+            {
+               "resourceID":0,
+               "amount":10
+            },
+            {
+               "resourceID":1,
+               "amount":20
+            }
+        ]
     },
     {
-        "name": "Pump_03",
+        "name": "pump_03",
         "description":"...",
         "type":"energy",
         "prefabPath":"pump_03",
         "isRotatable":false,
         "requiresBlueprint":false,
-        "requiredResources":[],
-        "upgrades":[]
+        "requiredResources":[]
     },
     {
-        "name": "Spawner",
-        "description":"...",
+        "name": "spawner",
+        "description":"Creates new agent",
         "type":"energy",
         "prefabPath":"spawner",
         "isRotatable":false,
         "requiresBlueprint":false,
-        "requiredResources":[],
-        "upgrades":[]
+        "requiredResources":[
+            {
+               "resourceID":2,
+               "amount":100
+            }
+        ]
     },
     {
-        "name": "Rabbit",
-        "description":"...",
+        "name": "rabbit",
+        "description":"Just a fun rabbit",
         "type":"energy",
         "prefabPath":"Rabbit",
         "isRotatable":false,
         "requiresBlueprint":false,
-        "requiredResources":[],
-        "upgrades":[]
+        "requiredResources":[
+            {
+               "resourceID":2,
+               "amount":50
+            }
+        ]
     },
     {
-        "name": "Charger",
-        "description":"...",
+        "name": "charger",
+        "description":"Charges agent",
         "type":"energy",
         "prefabPath":"charger",
         "isRotatable":false,
         "requiresBlueprint":false,
-        "requiredResources":[],
-        "upgrades":[]
+        "requiredResources":[
+            {
+               "resourceID":0,
+               "amount":20
+            },
+            {
+               "resourceID":1,
+               "amount":20
+            }, 
+            {
+               "resourceID":2,
+               "amount":20
+            }
+        ]
     },
     {
-        "name": "Tree",
-        "description":"...",
+        "name": "tree",
+        "description":"Grows a tree",
         "type":"energy",
         "prefabPath":"tree",
         "isRotatable":false,
         "requiresBlueprint":false,
-        "requiredResources":[],
-        "upgrades":[]
+        "requiredResources":[
+            {
+               "resourceID":0,
+               "amount":5
+            }
+        ]
     },
     {
-        "name": "Rocks",
-        "description":"...",
+        "name": "rocks",
+        "description":"Pile of rocks",
         "type":"energy",
         "prefabPath":"rocks",
         "isRotatable":false,
         "requiresBlueprint":false,
-        "requiredResources":[],
-        "upgrades":[]
+        "requiredResources":[
+            {
+               "resourceID":1,
+               "amount":5
+            }
+        ]
     },
     {
-        "name": "Generator",
+        "name": "generator",
         "description":"...",
         "type":"energy",
         "prefabPath":"Generator",
         "isRotatable":false,
         "requiresBlueprint":false,
-        "requiredResources":[],
-        "upgrades":[]
+        "requiredResources":[]
     }
    ]
 }

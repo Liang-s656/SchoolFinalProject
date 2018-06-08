@@ -73,25 +73,5 @@ public class PlayerData : MonoBehaviour {
         return null;
     }
 
-    public void OnGUI(){
-        int w = Screen.width;
-        int h = Screen.height;
-
-        if(myResources != null ){
-            GUILayout.BeginArea(new Rect(w - 200, h - 200, 200, 200));
-            foreach(Resource resource in myResources){
-                GUILayout.Label(resource.resourceID + ":" + resource.amount);
-            }
-            GUILayout.EndArea();
-        }
-
-        if(GUI.Button(new Rect(w / 2 - 100, h - 50, 200, 40),"ADD RANDOM RESOURCE")){
-            int resourceID = Random.Range(0, 8);
-            int amount =  Random.Range(1, 500);
-            Resource resource = new Resource();
-            resource.resourceID = resourceID;
-            resource.amount = amount;
-            AddResource(resource);
-        }
-    }
+    
 }

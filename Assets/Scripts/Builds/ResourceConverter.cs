@@ -38,4 +38,11 @@ public class ResourceConverter : ResourceCollector {
             }
         }
     }
+
+    public void DrawGUI(){
+        if(GUI.Button(new Rect(Screen.width - 140, 140, 120, 30), "Refill")){
+            CatchResourcesFromPlayer();
+        }
+    }
+
 }

@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-
+using System.Reflection;
+using UnityEngine;
 public class RihaNode{
     ValueType type = ValueType.auto;
     object value;
@@ -49,7 +50,7 @@ public class RihaNode{
     public float GetSize(){
         switch(type){
             case ValueType.number:
-                return (float)GetValue();
+                return float.Parse(GetValue().ToString());
             case ValueType.array:
                 return ((List<RihaNode>)value).Count;
             case ValueType.boolean:
@@ -62,6 +63,58 @@ public class RihaNode{
     public RihaNode get(RihaNode[] parameters){
         int id = (int)(parameters[0].GetSize());
         return ((List<RihaNode>)value)[id];
+    }
+    public RihaNode set(RihaNode[] parameters){
+        this.value = parameters[parameters.Length - 1].value;
+        return this;
+    }
+    public RihaNode equal(RihaNode[] parameters){
+        bool ret = false;
+        RihaNode comperisonNode = parameters[parameters.Length - 1];
+        if(comperisonNode.GetNodeType() == GetNodeType()){
+            if(comperisonNode.GetString() == GetString()){
+                ret = true;
+            }
+        }
+        return new RihaNode(ValueType.boolean, ret);
+    }
+
+    public RihaNode equaltype(RihaNode[] parameters){
+        bool ret = false;
+        RihaNode comperisonNode = parameters[parameters.Length - 1];
+        if(comperisonNode.GetNodeType() == GetNodeType()){
+            ret = true;
+        }
+        return new RihaNode(ValueType.boolean, ret);
+    }
+
+    public RihaNode biggerthan(RihaNode[] parameters){
+        bool ret = false;
+        RihaNode comperisonNode = parameters[parameters.Length - 1];
+        if(comperisonNode.GetSize() < GetSize()){
+            ret = true;
+        }
+        return new RihaNode(ValueType.boolean, ret);
+    }
+
+    public RihaNode lessthan(RihaNode[] parameters){
+        bool ret = false;
+        RihaNode comperisonNode = parameters[parameters.Length - 1];
+        if(comperisonNode.GetSize() > GetSize()){
+            ret = true;
+        }
+        Debug.Log(ret);
+        return new RihaNode(ValueType.boolean, ret);
+    }
+
+    public RihaNode GlobalCall(string method, RihaNode[] par){
+        MethodInfo functionMethod = value.GetType().GetMethod(method);
+        if(functionMethod != null){
+            object[] parameters = new object[]{ par };
+            RihaNode returnValue = (RihaNode)functionMethod.Invoke(value, parameters);
+            return returnValue;
+        }
+        return null;
     }
 
     private static float GetNumeric(object value){
@@ -79,4 +132,5 @@ public class RihaNode{
     private static bool IsList(object value){
         return value is IList  && value.GetType().IsGenericType;
     }
+
 }

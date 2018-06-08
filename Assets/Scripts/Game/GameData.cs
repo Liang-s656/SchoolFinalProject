@@ -1,13 +1,13 @@
 using UnityEngine;
 using System.Collections.Generic;
 using System.IO;
-[System.Serializable]
-public class GameData{
-    [System.Serializable]
-    public class Buildings{
-        public List<Buildable> buildings = new List<Buildable>();
-    }
 
+[System.Serializable]
+public class Buildings{
+    public List<Buildable> buildings = new List<Buildable>();
+}
+
+public class GameData{
     public static Buildings buildings;
     public static List<ResourceData> resources;
 
@@ -39,6 +39,16 @@ public class GameData{
         reader.Close();
     }
 
+    public static string GetResourceName(int id) {
+        foreach (ResourceData resource in resources)
+        {
+            if(resource.resourceID == id){
+                return resource.title;
+            }
+        }
+        return null;
+    }
+
     public static int GetResourceIdByName(string name){
         foreach (ResourceData resource in resources)
         {
@@ -47,5 +57,15 @@ public class GameData{
             }
         }
         return -1;
+    }
+
+    public static Buildable GetBuilding(string name){
+        foreach (Buildable building in buildings.buildings)
+        {
+            if(building.name.ToLower() == name.ToLower()){
+                return building;
+            }
+        }
+        return null;
     }
 }

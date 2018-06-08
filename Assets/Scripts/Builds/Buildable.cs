@@ -10,5 +10,16 @@ public class Buildable{
 
     public Resource[] requiredResources;
 
-    public Buildable[] upgrades;
+    public string GetDescription(){
+        string lines = 
+            "<color=#13fade><b>description:</b></color> " + description + "\n" +
+            "<color=#13fade><b>type:</b></color> " + type + "\n" +
+            "<color=#13fade><b>requires:[</b></color> " + "\n" 
+        ;
+        foreach(Resource res in requiredResources){
+            lines += "   <color=#13fade><b>" + GameData.GetResourceName(res.resourceID) + "</b></color> " + ":" + res.amount + "\n";
+        }  
+        lines += "<color=#13fade><b>]</b></color>";
+        return lines;
+    }
 }

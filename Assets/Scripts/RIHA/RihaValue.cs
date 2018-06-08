@@ -1,3 +1,3 @@
 ﻿public enum ValueType {
-    number, text, function, boolean, tmp, auto, array
+    number, text, function, boolean, tmp, auto, array, gameobject, GLOBAL
 }
