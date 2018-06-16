@@ -33,7 +33,7 @@ public class AgentController : MonoBehaviour {
                 }
             }
         }else{
-            energyPower -= Time.deltaTime * 10;
+            energyPower -= Time.deltaTime / 2;
             SetSize();
         }
     }

@@ -33,7 +33,6 @@ public class Tile: Node {
 
     public override bool IsMovable() {
         //return true;
-        Debug.Log(GetBuilding());
         return GetBuilding() == "" || IsClimbable() || GetBuilding() == "agent" ;
     }
 
@@ -43,8 +42,14 @@ public class Tile: Node {
         if(building.tag == "stairs"){
             Tile tileTowards = StairTowards(building);
             if(tileTowards.location.y == location.y || tileTowards == null){
+                Debug.Log(tileTowards);
+                Debug.Log("ga");
                 return false;
             }
+        }
+
+        if(building.tag == "rabbit"){
+            return true;
         }
 
         this.building = building;

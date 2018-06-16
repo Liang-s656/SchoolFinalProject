@@ -6,7 +6,6 @@ public class TreeSibling : MonoBehaviour {
     private static float SPEED = 0.1f;
 
     void FixedUpdate() {
-            Debug.Log(transform.localScale.y);
         if(transform.localScale.y < 1){
             transform.localScale += Vector3.one * Time.deltaTime * SPEED;
         }else{

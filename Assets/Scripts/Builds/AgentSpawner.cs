@@ -9,7 +9,7 @@ public class AgentSpawner : MonoBehaviour {
 
     private GameObject agentPrefab;
 
-    private float timer = 0, destroyTimer = 2;
+    private float timer = 0, destroyTimer = 1;
 
     /// <summary>
     /// Start is called on the frame when a script is enabled just before

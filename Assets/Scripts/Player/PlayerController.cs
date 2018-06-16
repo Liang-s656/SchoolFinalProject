@@ -17,6 +17,8 @@ public class PlayerController : MonoBehaviour {
 
     private bool displayUI = false;
 
+    public GUISkin skin;
+
 
    struct ClickData
     {
@@ -28,6 +30,7 @@ public class PlayerController : MonoBehaviour {
 
     private void Start() {
         i = island.GetComponent<Island>();
+        
     }
 
     private void Update() {
@@ -61,15 +64,21 @@ public class PlayerController : MonoBehaviour {
                     AgentController ac = selectedGO.GetComponent<AgentController>();
                     if(clickTag == "island"){
                         ac.GeneratePathToTarget(ClickData.clickedTile, true);
-                    }else{
+                    }else if(ClickData.clickedObject != null){
                         ac.TargetToAction(ClickData.clickedObject.transform);
                     }
                 }else if(clickTag == "agent" && selectedGO != null && selectedGO.tag == "charger"){
                     Charger charger = selectedGO.GetComponent<Charger>();
                     charger.SetTarget(ClickData.clickedObject.GetComponent<AgentController>());
-                }else{
+                }else if(clickTag != "island"){
                     selectedGO = ClickData.clickedObject;
-                    selector.gameObject.SetActive(true);
+                    if(selectedGO != null){
+                        SetLayerRecursive(selectedGO, 8);
+                        selector.gameObject.SetActive(true);
+                    }else{
+                        SetLayerRecursive(selectedGO, 0);
+                        selector.gameObject.SetActive(false);
+                    }
                 }
             }
 
@@ -82,8 +91,8 @@ public class PlayerController : MonoBehaviour {
         }
 
         if(selectedGO != null){
-            float yPos = Mathf.Floor(selectedGO.transform.position.y);
-            yPos += 0.001f;
+            float yPos = Mathf.Round(selectedGO.transform.position.y);
+            yPos += 0.0025f;
             selector.position = new Vector3(
                 selectedGO.transform.position.x,
                 yPos,
@@ -92,10 +101,29 @@ public class PlayerController : MonoBehaviour {
         }
     }
 
+    private void OnGUI(){
+        if(selectedGO != null){
+            GUI.skin = skin;
+            if(selectedGO.GetComponent<ResourceConverter>()){
+                selectedGO.GetComponent<ResourceConverter>().DrawGUI();
+            }
+        }
+    }
+
+    private void SetLayerRecursive(GameObject obj, int layer){
+        if(obj == null) return;
+        
+        obj.layer = layer;
+        foreach (Transform child in obj.transform)
+        {
+            SetLayerRecursive(child.gameObject, layer);
+        }
+    }
+
     public void SetClickData(bool ubdateClick = false){
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         if(ubdateClick){
-            ClickData.clickedObject = null;
+          //  ClickData.clickedObject = null;
         }
 
         if (island.Raycast(ray, out hit, 100)) {
@@ -111,7 +139,7 @@ public class PlayerController : MonoBehaviour {
                 }
             }
         }
-        if(ClickData.clickedObject == null && ubdateClick){
+        if(ubdateClick && ClickData.clickedObject == null){
             if (Physics.Raycast(ray, out hit )) {
                 ClickData.clickedObject = hit.collider.gameObject;
             }
@@ -143,22 +171,13 @@ public class PlayerController : MonoBehaviour {
         this.building = building;
         buildingGO = (GameObject)Resources.Load("Prefabs/Builds/" + building.prefabPath);
         GameObject b = (GameObject)Instantiate(buildingGO);
+        b.name = building.name;
         SetBuildingComponents(b, false);
         buildingGO = b;
 
         DisableSelector();
     }
 
-    /// <summary>
-    /// OnGUI is called for rendering and handling GUI events.
-    /// This function can be called multiple times per frame (one call per event).
-    /// </summary>
-    void OnGUI()
-    {
-        if(displayUI){
-
-        }
-    }
 
     private void DisableSelector(){
         selectedGO = null;
