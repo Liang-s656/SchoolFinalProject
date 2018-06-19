@@ -35,4 +35,14 @@ public class Collectable : MonoBehaviour {
         //Destroy(gameObject);
     }
 
+     public void DrawGUI(){
+        Vector2 pos = Camera.main.WorldToScreenPoint(transform.position);
+        float mid = Screen.height - pos.y - 22 - (resources.Count * 21) / 2;
+        for(int r = 0; r < resources.Count; r++){
+            Resource resource = resources[r];
+            string name = GameData.GetResourceName(resource.resourceID);
+            GUI.Box(new Rect(pos.x + 20, mid + 21 * r, 100, 20), name + ": <b>" + resource.amount + "</b>");
+        }
+    }
+
 }

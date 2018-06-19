@@ -25,11 +25,13 @@ public class ResourceConverter : ResourceCollector {
 
     private void CatchResourcesFromPlayer() {
         canWork = PlayerData.RemoveResource(requiredResource);
-        animator.enabled = canWork;
+        animator.SetBool("work", canWork);
     }
 	
 	// Update is called once per frame
 	protected override void FixedUpdate() {
+        if(!work) return;
+        
         if(canWork){
             timer -= Time.deltaTime;
             if(timer < 0){
@@ -40,7 +42,8 @@ public class ResourceConverter : ResourceCollector {
     }
 
     public void DrawGUI(){
-        if(GUI.Button(new Rect(Screen.width - 140, 140, 120, 30), "Refill")){
+        Vector2 pos = Camera.main.WorldToScreenPoint(transform.position);
+        if(GUI.Button(new Rect(pos.x + 20, Screen.height - pos.y, 80, 20), "refill" , "BuildingBtn")){
             CatchResourcesFromPlayer();
         }
     }

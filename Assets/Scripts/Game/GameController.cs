@@ -8,6 +8,7 @@ public class GameController : MonoBehaviour {
     public GUISkin skin;
 
     public static PlayerController playerController;
+    public static RihaCompiler compiler;
     public static bool isPause = false;
 
     public static Island island;
@@ -20,6 +21,7 @@ public class GameController : MonoBehaviour {
 
 
         playerController = player.GetComponent<PlayerController>();
+        compiler = GetComponent<RihaCompiler>();
         isPause = false;
         
         island = GameObject.FindGameObjectWithTag("island").GetComponent<Island>();
@@ -45,6 +47,10 @@ public class GameController : MonoBehaviour {
     int topOffset = 0;
     
     private void OnGUI() {
+      //  if(compiler.showMenu){
+      //      return;
+      //  }
+
         GUI.skin = skin;
         float w = Screen.width, h = Screen.height;
 

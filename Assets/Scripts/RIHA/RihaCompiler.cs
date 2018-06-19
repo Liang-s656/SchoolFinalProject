@@ -5,6 +5,7 @@ using System.Text.RegularExpressions;
 using System.Linq;
 using System;
 using System.Reflection;
+using UnityEngine.PostProcessing;
 public class RihaCompiler : MonoBehaviour {
 
     static Dictionary<string, RihaNode> variableMemory;
@@ -15,39 +16,135 @@ public class RihaCompiler : MonoBehaviour {
     public GUISkin consoleSkin;
     public bool showMenu;
     string codeText, codeOutput;
-    float left = -400;
+    float left = -400, sideOffset = 400;
+
+    bool filesShow = false;
+
+    Dictionary<string, string> files;
+    string activeFile = "main";
+
+
+    string[][] keyWords = new string[][] {
+        new string[]{"set", "scope", "end", "print", "scope", "as", "size", "add", "to", "of", "import"},
+        new string[]{"number", "text", "boolean", "GLOBAL", "loop", "check", "function", "gameobject", "auto", "array"},                
+        new string[]{"get", "equal", "equal_type", "bigger_than", "less_than"},                
+    };
+
+    void Start()
+    {
+        files = new Dictionary<string, string>();
+        files.Add("main", "");
+        files.Add("basic", "");
+        PopulateGlobals();
+
+        InvokeRepeating("Updater", 1, 0.25f);
+    }
+
+    void Updater()
+    {
+        if(showMenu == false && Time.timeScale >= 1){
+            if(!String.IsNullOrEmpty(files["main"])){
+                Execute(files["main"]);
+            }
+        }
+    }
 
     public int lineNumber;
     void OnGUI(){
         GUI.skin = consoleSkin;
-           codeText = GUI.TextArea( new Rect(left, 20, 380, Screen.height - 80 - 250), codeText );
-           GUI.Box(new Rect(left, Screen.height - 310, 380, 260), codeOutput);
-           if(GUI.Button(new Rect(left, Screen.height - 50, 380, 30), "run")){
-               codeOutput = "";
-               Execute(codeText);
-           }
+
+        int lineCount = 1;
+
+        string formatedCode =  files[activeFile];        
+        if(!string.IsNullOrEmpty( files[activeFile])){
+            lineCount = files[activeFile].Split(new [] { '\r', '\n' }).Length;
+            string before = "<b><color=white>";
+            string after = "</color></b>";
+            for (int i = 0; i < keyWords.Length; i++){
+                if(i == 1){
+                    before = "<i><color=#fff600>";
+                    after = "</color></i>";
+                }else if(i == 2){
+                    before = "<color=#0DECCF>";
+                    after = "</color>";
+                }
+                for (int w = 0; w < keyWords[i].Length; w++){
+                    string pattern = @"\b"+keyWords[i][w]+@"\b";
+                    string replace = before + keyWords[i][w] + after;
+                    formatedCode = Regex.Replace(formatedCode, pattern, replace);
+                }
+            }
+
+            formatedCode = Regex.Replace(formatedCode, @"\s*\/\/.*", m => "<color=#777777><i>" + m.Groups[0].Value + "</i></color>" );
+        }
+
+        GUI.BeginGroup(new Rect(left, 0, sideOffset, Screen.height));
+        GUI.Box( new Rect(0, 0, 43, Screen.height), "");
+        if(GUI.Button( new Rect(0, Screen.height - 43, 43, 43), "./>")){
+            codeOutput = "";
+            Execute(files[activeFile]);
+        }
+        /*if(GUI.Button( new Rect(0, Screen.height - 86, 43, 43), "", "handbook")){
+            
+        }*/
+        filesShow = GUI.Toggle( new Rect(0, 0, 43, 43), filesShow, "", "files");
+        if(filesShow){
+            GUI.Box(new Rect(43, 0, 200, Screen.height), "", "file-explorer");
+            GUI.Label(new Rect(43, 0, 200, 43), "EXPLORER", "file-explorer-title");
+            GUI.BeginGroup(new Rect(43, 43, 200, Screen.height-43));
+            foreach(KeyValuePair<string, string> file in files){
+                if(GUILayout.Button(file.Key + ".rih", (activeFile == file.Key ? "file-active" : "file"), GUILayout.Width(250))){
+                    activeFile = file.Key;
+                }
+            }
+            GUI.EndGroup();
+        }
+        
+        GUI.BeginGroup(new Rect(sideOffset - 357, 0, 357, Screen.height));
+            GUI.Box( new Rect(0, 0, 357, Screen.height - 250), formatedCode, "output-code");
+            files[activeFile] = GUI.TextArea( new Rect(0, 0, 357, Screen.height - 250), files[activeFile]);
+            for(int i = 1; i <= lineCount; i++){
+                string output = (i < 10 ? "0" + i : i.ToString());
+                GUI.Label(new Rect(10, 10 + (i - 1) * 16, 30, 20), output);
+            }
+            GUI.Box( new Rect(0, Screen.height - 250, 357, 250), codeOutput, "compiled-output");
+        GUI.EndGroup();
+
+        GUI.EndGroup();
+
+        //GUI.Box(new Rect(left, Screen.height - 310, 400, 260), codeOutput);
+
+        /*if(GUI.Button(new Rect(left, Screen.height - 50, 400, 30), "run")){
+            codeOutput = "";
+            Execute(codeText);
+        }*/
+
+        AnimateTerminal();
+    }
+
+    void AnimateTerminal(){
+        sideOffset = filesShow ? 600 : 400;
         if(showMenu == true){
-           if(left < 20){
-               left += Time.deltaTime * 500;
+           if(left < 0){
+               left += Time.deltaTime * 700;
            }else{
-               left = 20;
+               left = 0;
            }
         }else{
-            if(left > -400){
-               left -= Time.deltaTime * 500;
+            if(left > -sideOffset){
+               left -= Time.deltaTime * 700;
            }else{
-               left = -400;
+               left = -sideOffset;
            }
         }
     }
 
-    void Start()
-    {
-        PopulateGlobals();
-    }
+
     private void Update() {
         if(Input.GetKeyDown(KeyCode.Q)){
             showMenu = !showMenu;
+            Camera.main.GetComponent<PostProcessingBehaviour>().enabled = showMenu;
+            GameController.playerController.GetComponent<Debuger>().enabled = showMenu;
         }
     }
 
@@ -62,7 +159,7 @@ public class RihaCompiler : MonoBehaviour {
         command.Replace("<br>", "\n");
 
         
-     try{
+    try{
         variableMemory = new Dictionary<string, RihaNode>();
         scopes = new List<RihaScope>();
 
@@ -70,7 +167,7 @@ public class RihaCompiler : MonoBehaviour {
 
         string commandLine = "";
 
-        Resource requiredEnergy = new Resource(){ resourceID = 2, amount = commands.Length * 10};
+        Resource requiredEnergy = new Resource(){ resourceID = 2, amount = commands.Length * 5};
         if(!PlayerData.HasEnoughResource(requiredEnergy)){
             codeOutput = "NOT ENOUGH ENERGY!\nREQUIRED: " + requiredEnergy.amount;
             return;
@@ -81,12 +178,25 @@ public class RihaCompiler : MonoBehaviour {
 
             if(scopes.Count > 0){
                 RihaScope acctiveScope = scopes.Last();
-                if(acctiveScope.type == ScopeType.check){
-                    if((bool)acctiveScope.parameter.GetValue() == false && !MatchesRegex(line, @"\s*end\s+scope\s*")){
-                        continue;
+                if(!MatchesRegex(line, @"\s*end\s+scope\s*")){
+                    // Check
+                    if(acctiveScope.type == ScopeType.check){
+                        if(!(bool)acctiveScope.parameter.GetValue()){
+                            continue;
+                        }
+                    }
+                    // Loop
+                    else if (acctiveScope.type == ScopeType.loop){
+                        if(acctiveScope.parameter.GetSize() < 1){
+                            continue;
+                        }
                     }
                 }
             }
+
+            if(MatchesRegex(line, @"\s*\/\/.*"))
+                continue;
+
             commandLine += line;
             if(!IsEOL(line)){
                 continue;
@@ -96,7 +206,7 @@ public class RihaCompiler : MonoBehaviour {
             commandLine = "";
         }
     } catch (Exception e){
-            codeOutput += "\n<color=red><b>ERROR OCCURRED</b></color>";
+            codeOutput += "\n<color=red><b>ERROR OCCURRED:</b></color>" + e.Message;
             Debug.LogError(e);
         }
 	}
@@ -134,8 +244,8 @@ public class RihaCompiler : MonoBehaviour {
 
     //END OF LINE
     public bool IsEOL(string line){
-        List<string> words = SplitWords(line);
-        if(line.Count() > 0){
+        List<string> words = SplitWords(line);            
+        if(!String.IsNullOrEmpty(line) && words.Count() > 0){
             line = words.Last();
             return line[line.Length - 1] != ':';
         }
@@ -150,6 +260,13 @@ public class RihaCompiler : MonoBehaviour {
             ValueType type = GetValueType(words[3]);
             varible.SetType(type);
             variableMemory.Add(words[1], varible);
+        }
+    }
+    public void import (string action, string[] words, RihaNode[] previuseActionResult){
+        //Patern set [varible_key] as [variable_type];
+        string setPattern = @"\s*import\s*";
+        if(MatchesRegex(action, setPattern)){
+            RihaNode varible = previuseActionResult[previuseActionResult.Length - 1];
         }
     }
 
@@ -189,7 +306,6 @@ public class RihaCompiler : MonoBehaviour {
         string printPattern = @"\s*print\s*";
         if(MatchesRegex(action, printPattern)){
             RihaNode node = previuseActionResult[previuseActionResult.Length - 1];
-            Debug.Log(node.GetNodeType());
             string value = node.GetString();
             codeOutput += value + "\n";
         }

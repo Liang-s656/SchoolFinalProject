@@ -46,7 +46,8 @@ public class AgentMovement : MonoBehaviour {
         }
 
         myTile = GameController.island.GetTileByWorldCoords(transform.position.x, transform.position.z);
-        myTile.building = gameObject;
+        if(myTile.GetBuilding() == null)
+            myTile.building = gameObject;
 
         if(CanMove()){
             Vector3 from = transform.position;

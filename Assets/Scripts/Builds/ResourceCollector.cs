@@ -10,6 +10,7 @@ public class ResourceCollector : MonoBehaviour {
 
     protected float timer;
     private Resource resource;
+    protected bool work = true;
 	public virtual void Start () {
         resource = new Resource();
         resource.resourceID = GameData.GetResourceIdByName(resourceName);
@@ -18,6 +19,7 @@ public class ResourceCollector : MonoBehaviour {
 	}
 
     protected virtual void FixedUpdate() {
+        if(!work) return;
         timer -= Time.deltaTime;
         if(timer < 0){
             FinishTask();
@@ -27,5 +29,12 @@ public class ResourceCollector : MonoBehaviour {
     protected void FinishTask() {
         PlayerData.AddResource(resource);
         timer = coolDownPeriod;
+    }
+
+    public void DrawGUI(){
+        Vector2 pos = Camera.main.WorldToScreenPoint(transform.position);
+        if(GUI.Button(new Rect(pos.x + 20, Screen.height - pos.y - 21, 90, 20), "work: <b>" + work + "</b>", "BuildingBtn")){
+            work = !work;
+        }
     }
 }

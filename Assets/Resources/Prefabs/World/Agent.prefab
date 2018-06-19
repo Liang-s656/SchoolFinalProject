@@ -158,6 +158,8 @@ MonoBehaviour:
   energyPower: 100
   visual: {fileID: 1118080817984242}
   walking: 0
+  evilMaterial: {fileID: 2100000, guid: 7acfe50f90cf68246b226b60efa24631, type: 2}
+  evillDead: {fileID: 1892078723244562, guid: 46876a2780737ec45a19d62f88e5ce56, type: 2}
 --- !u!114 &114761361406038636
 MonoBehaviour:
   m_ObjectHideFlags: 1

@@ -5,6 +5,9 @@ public class TaskRepair : ITask {
     private float timer;
     private string state = "Repairing";
 
+    public TaskRepair(Repairable target = null){
+        this.target = target;
+    }
     public bool Execute(){
         if(target == null)
             return false;

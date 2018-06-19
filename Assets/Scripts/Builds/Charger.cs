@@ -64,4 +64,14 @@ public class Charger : MonoBehaviour {
         float size = energy / 30.0f;
         energyBall.transform.localScale = Vector3.one * size;
     }
+
+     public void DrawGUI(){
+        Vector2 pos = Camera.main.WorldToScreenPoint(transform.position);
+        if(target != null){
+            if(GUI.Button(new Rect(pos.x + 20, Screen.height - pos.y - 21, 80, 20), "stop" , "BuildingBtn")){
+                target = null;
+                SetLineRenderer();
+            } 
+        }
+    }
 }

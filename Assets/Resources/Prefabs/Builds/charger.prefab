@@ -56,6 +56,7 @@ GameObject:
   - component: {fileID: 4520618662034004}
   - component: {fileID: 95122868551860300}
   - component: {fileID: 114187027326321756}
+  - component: {fileID: 114932622150816106}
   m_Layer: 0
   m_Name: charger
   m_TagString: charger
@@ -317,6 +318,20 @@ MonoBehaviour:
   requires:
     resourceID: 2
     amount: 25
+--- !u!114 &114932622150816106
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1859149685680592}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 933c3914615825c47a89a3174c92789c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  health: 100
+  repairCooldown: 5
+  effectDie: {fileID: 1892078723244562, guid: 46876a2780737ec45a19d62f88e5ce56, type: 2}
 --- !u!120 &120995090149836836
 LineRenderer:
   m_ObjectHideFlags: 1

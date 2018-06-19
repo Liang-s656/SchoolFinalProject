@@ -22,7 +22,7 @@ public class RihaNode{
 
         string output = "";
         foreach (RihaNode node in ((List<RihaNode>)value)){
-                output += node.GetString() + ",";
+            output += node.GetString() + ",";
         }
         return output;
     }
@@ -65,7 +65,9 @@ public class RihaNode{
         return ((List<RihaNode>)value)[id];
     }
     public RihaNode set(RihaNode[] parameters){
-        this.value = parameters[parameters.Length - 1].value;
+        RihaNode p = parameters[parameters.Length - 1];
+        this.value = p.value;
+        this.type = p.GetNodeType();
         return this;
     }
     public RihaNode equal(RihaNode[] parameters){
@@ -79,7 +81,7 @@ public class RihaNode{
         return new RihaNode(ValueType.boolean, ret);
     }
 
-    public RihaNode equaltype(RihaNode[] parameters){
+    public RihaNode equal_type(RihaNode[] parameters){
         bool ret = false;
         RihaNode comperisonNode = parameters[parameters.Length - 1];
         if(comperisonNode.GetNodeType() == GetNodeType()){
@@ -88,7 +90,7 @@ public class RihaNode{
         return new RihaNode(ValueType.boolean, ret);
     }
 
-    public RihaNode biggerthan(RihaNode[] parameters){
+    public RihaNode bigger_than(RihaNode[] parameters){
         bool ret = false;
         RihaNode comperisonNode = parameters[parameters.Length - 1];
         if(comperisonNode.GetSize() < GetSize()){
@@ -97,7 +99,7 @@ public class RihaNode{
         return new RihaNode(ValueType.boolean, ret);
     }
 
-    public RihaNode lessthan(RihaNode[] parameters){
+    public RihaNode less_than(RihaNode[] parameters){
         bool ret = false;
         RihaNode comperisonNode = parameters[parameters.Length - 1];
         if(comperisonNode.GetSize() > GetSize()){

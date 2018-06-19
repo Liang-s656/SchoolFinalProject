@@ -6,6 +6,10 @@ public class AgentController : MonoBehaviour {
     private List<ITask> taskBatch;
 
     public bool walking;
+    public Material evilMaterial;
+    bool isEvill;
+    float evillTimer = 5;
+    public GameObject evillDead;
 
     private Island island;
     private Animator animator;
@@ -36,14 +40,45 @@ public class AgentController : MonoBehaviour {
             energyPower -= Time.deltaTime / 2;
             SetSize();
         }
+        if(isEvill){
+            evillTimer -= Time.deltaTime;
+        }
     }
 
     void Update(){
         if(energyPower < 25){                  
             Destroy(gameObject, 1);
         }else if(energyPower > 150){
-
+            if(!isEvill){
+                SetEvill();
+            }
         }
+
+        if(evillTimer < 0){
+            Explode();
+        }
+    }
+
+    void SetEvill(){
+        isEvill = true;
+        visual.GetComponent<MeshRenderer>().material = evilMaterial;
+        animator.SetBool("evill", true);
+    }
+
+    void Explode(){
+        for(int x = -2; x <= 2; x++){
+            for(int z = -2; z <= 2; z++){      
+                Tile tile = island.GetTileByWorldCoords(transform.position.x + x, transform.position.z + z);
+                if(tile != null && tile.building != null){
+                    Repairable r = tile.building.GetComponent<Repairable>();
+                    if(r != null){
+                        r.AddHealth(Random.Range(-60, -20));
+                    }
+                }
+            }
+        }
+        Instantiate(evillDead, transform.position, transform.rotation);
+        Destroy(gameObject);            
     }
 
     public void SetSize(){
@@ -63,7 +98,8 @@ public class AgentController : MonoBehaviour {
             } else if(target.name == "Charge Station") {
 
             } else if(target.GetComponent<Repairable>()){
-                AddTask(new TaskRepair());            
+                Repairable repairable = target.GetComponent<Repairable>();
+                AddTask(new TaskRepair(repairable));            
             }
         }
     }
@@ -90,6 +126,12 @@ public class AgentController : MonoBehaviour {
             }
         }
         return false;
+    }
+
+    public void DrawGUI(){
+        Vector2 pos = Camera.main.WorldToScreenPoint(transform.position);
+        GUI.Box(new Rect(pos.x + 20, Screen.height - pos.y - 22, 100, 20), "", "EnergyEmpty");
+        GUI.Box(new Rect(pos.x + 20, Screen.height - pos.y - 22, 1 * energyPower, 20), Mathf.Round(energyPower * 10) / 10.0f + " En", "Energy");
     }
 
 }

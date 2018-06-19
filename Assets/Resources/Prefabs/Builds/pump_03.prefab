@@ -21,6 +21,7 @@ GameObject:
   - component: {fileID: 4626336760811412}
   - component: {fileID: 95813131076904930}
   - component: {fileID: 114837736498518886}
+  - component: {fileID: 114963783800306724}
   m_Layer: 0
   m_Name: pump_03
   m_TagString: Untagged
@@ -217,3 +218,17 @@ MonoBehaviour:
   resourceName: Energy
   coolDownPeriod: 1
   amount: 10
+--- !u!114 &114963783800306724
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1698211051585878}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 933c3914615825c47a89a3174c92789c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  health: 100
+  repairCooldown: 5
+  effectDie: {fileID: 1892078723244562, guid: 46876a2780737ec45a19d62f88e5ce56, type: 2}

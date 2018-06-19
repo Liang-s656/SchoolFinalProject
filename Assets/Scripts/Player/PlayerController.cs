@@ -2,7 +2,6 @@
 Select, build, action
 */
 using UnityEngine;
-
 public class PlayerController : MonoBehaviour {
     
     public Collider island;
@@ -19,7 +18,8 @@ public class PlayerController : MonoBehaviour {
 
     public GUISkin skin;
 
-
+    Vector2 cursorOffset = new Vector2(10, 10);
+    public Texture2D cursor;
    struct ClickData
     {
         public static GameObject clickedObject;
@@ -30,7 +30,7 @@ public class PlayerController : MonoBehaviour {
 
     private void Start() {
         i = island.GetComponent<Island>();
-        
+        Cursor.SetCursor(cursor, cursorOffset, CursorMode.Auto);
     }
 
     private void Update() {
@@ -71,6 +71,11 @@ public class PlayerController : MonoBehaviour {
                     Charger charger = selectedGO.GetComponent<Charger>();
                     charger.SetTarget(ClickData.clickedObject.GetComponent<AgentController>());
                 }else if(clickTag != "island"){
+                    
+                    if(selectedGO != null){
+                        SetLayerRecursive(selectedGO, 0);
+                    }
+
                     selectedGO = ClickData.clickedObject;
                     if(selectedGO != null){
                         SetLayerRecursive(selectedGO, 8);
@@ -107,8 +112,24 @@ public class PlayerController : MonoBehaviour {
             if(selectedGO.GetComponent<ResourceConverter>()){
                 selectedGO.GetComponent<ResourceConverter>().DrawGUI();
             }
+            if(selectedGO.GetComponent<Repairable>()){
+                selectedGO.GetComponent<Repairable>().DrawGUI();
+            }
+            if(selectedGO.GetComponent<ResourceCollector>()){
+                selectedGO.GetComponent<ResourceCollector>().DrawGUI();
+            }
+            if(selectedGO.GetComponent<Collectable>()){
+                selectedGO.GetComponent<Collectable>().DrawGUI();
+            }
+            if(selectedGO.GetComponent<AgentController>()){
+                selectedGO.GetComponent<AgentController>().DrawGUI();
+            }
+            if(selectedGO.GetComponent<Charger>()){
+                selectedGO.GetComponent<Charger>().DrawGUI();
+            }
         }
     }
+
 
     private void SetLayerRecursive(GameObject obj, int layer){
         if(obj == null) return;
@@ -180,6 +201,7 @@ public class PlayerController : MonoBehaviour {
 
 
     private void DisableSelector(){
+        if(selectedGO != null) SetLayerRecursive(selectedGO, 0);
         selectedGO = null;
         selector.gameObject.SetActive(false);
     }

@@ -55,6 +55,7 @@ GameObject:
   - component: {fileID: 4422265312896792}
   - component: {fileID: 95177231032337120}
   - component: {fileID: 114224200527070896}
+  - component: {fileID: 114182737757426538}
   m_Layer: 0
   m_Name: pump_01
   m_TagString: Untagged
@@ -202,6 +203,20 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
+--- !u!114 &114182737757426538
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1491800903200546}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 933c3914615825c47a89a3174c92789c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  health: 100
+  repairCooldown: 5
+  effectDie: {fileID: 1892078723244562, guid: 46876a2780737ec45a19d62f88e5ce56, type: 2}
 --- !u!114 &114224200527070896
 MonoBehaviour:
   m_ObjectHideFlags: 1
